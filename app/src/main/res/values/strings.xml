@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">My Nutricion</string>
+    <string name="personal_data">προσωπικά δεδομένα</string>
+    <string name="messeges">Μηνύματα</string>
+    <string name="program_nut">πρόγραμμα διατροφής</string>
 </resources>
