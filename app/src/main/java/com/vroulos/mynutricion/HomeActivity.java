@@ -3,17 +3,42 @@ package com.vroulos.mynutricion;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 public class HomeActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        ActionBar actionbar = getSupportActionBar();
+
+        if (getSupportActionBar() != null) {
+            actionbar.setDisplayHomeAsUpEnabled(true);
+            actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
+            getSupportActionBar().setDisplayUseLogoEnabled(true);
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+
+        }
+
+
+
+
+
 
         drawerLayout = findViewById(R.id.drawer_layout);
 
@@ -33,13 +58,42 @@ public class HomeActivity extends AppCompatActivity {
                             case R.id.messeges:{
                                 Intent intent = new Intent(HomeActivity.this, MessegeActivity.class);
                                 startActivity(intent);
+                            }case R.id.program_nutricion:{
+                                // Create new fragment and transaction
+                                Fragment newFragment = new MessageFragment();
+                                FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+
+                                // Commit the transaction
+                                transaction.commit();
                             }
                         }
                         return true;
                     }
                 });
 
+        // Create new fragment and transaction
+        Fragment newFragment = new MessageFragment();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+
+
+
+        // Commit the transaction
+        transaction.commit();
+
+
+
 
 
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                drawerLayout.openDrawer(GravityCompat.START);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }

@@ -36,11 +36,13 @@ public class LoginActivity extends AppCompatActivity {
                 String name = nameLogin.getText().toString();
                 String password = passLogin.getText().toString();
 
+                //if the the users has put the right name and password ,the function returns true
+                //the db is the current database object
                 Boolean checkuser = db.checkUserLogin(name,password);
                 if (checkuser){
-                    Intent homeIntent = new Intent(LoginActivity.this, HomeActivity.class);
+                    Intent homeIntent = new Intent(LoginActivity.this, HomeActivity1.class);
                     startActivity(homeIntent);
-                    Toast.makeText(getApplicationContext(),"Successful login", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"Successful login", Toast.LENGTH_SHORT).show();
 
                 }
             }
@@ -48,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     }
-
+    //if the user wants to register from login activity / goes to RegisterActivity
     public void notRegistered(View view) {
         Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
         startActivity(registerIntent);
