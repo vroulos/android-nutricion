@@ -1,12 +1,14 @@
 package com.vroulos.mynutricion;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.facebook.stetho.Stetho;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -18,6 +20,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        Stetho.initializeWithDefaults(this);
 
         final DatabaseHelper db = new DatabaseHelper(this);
 
@@ -38,13 +42,20 @@ public class LoginActivity extends AppCompatActivity {
 
                 //if the the users has put the right name and password ,the function returns true
                 //the db is the current database object
-                Boolean checkuser = db.checkUserLogin(name,password);
-                if (checkuser){
-                    Intent homeIntent = new Intent(LoginActivity.this, HomeActivity1.class);
-                    startActivity(homeIntent);
-                    Toast.makeText(getApplicationContext(),"Successful login", Toast.LENGTH_SHORT).show();
+                if (name.length() >0 && password.length()>0){
+                    Boolean checkuser = db.checkUserLogin(name,password);
+                    if (checkuser){
+                        SaveSharedPreference.setUserName(LoginActivity.this, name);
+                        Intent homeIntent = new Intent(LoginActivity.this, HomeActivity1.class);
+                        startActivity(homeIntent);
+                        Toast.makeText(getApplicationContext(),"Successful login", Toast.LENGTH_SHORT).show();
 
+
+                    }
+                }else {
+                    Toast.makeText(LoginActivity.this, "small username", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
 

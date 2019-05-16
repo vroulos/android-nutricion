@@ -7,21 +7,40 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.ArrayList;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
 
+    private static final String TAG = "super name";
 
+    //the database created when the app installed
     public DatabaseHelper(Context context) {
-        super(context, "nutri.db", null, 1);
+        super(context, "nutri.db", null, 2);
+
     }
+
 
     @Override
+    //create the tables user and user_username
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table user(username text primary key, password text)");
+        db.execSQL("create table user_weight( weight int, username text , date_record long)");
+        db.execSQL("create table user_perimeter(perimeter int, username text)");
     }
+
+//    @Override
+//    public void onOpen(SQLiteDatabase db) {
+//        super.onOpen(db);
+//    }
+
+
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("drop table if exists user");
+        db.execSQL("drop table if exists user_weight");
+        db.execSQL("drop table if exists user_perimeter");
+        onCreate(db);
     }
 
     //insert data to table user
@@ -38,6 +57,44 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         else return true;
     }
+
+
+
+
+
+
+
+    public boolean insert_weight(String weight, long date){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValuesWeight = new ContentValues();
+        contentValuesWeight.put("weight", weight);
+        contentValuesWeight.put("date_record", date);
+        long insVal = db.insert("user_weight" ,null,contentValuesWeight);
+
+        if (insVal == -1){
+            Log.d("trela tag", "insert_weight: noooo");
+            return false;
+
+        }else{
+            Log.d("lela tag", "insert_weight: yea");
+            return true;
+        }
+    }
+
+    public boolean setPerimeter(String perimeter){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues valuesPerimeter = new ContentValues();
+        valuesPerimeter.put("perimeter",perimeter);
+        long val = db.insert("user_perimeter",null,valuesPerimeter);
+
+        if(val == -1){
+            return false;
+        }
+        return true;
+    }
+
 
     //check the username and password to login
     public boolean checkUserLogin(String name, String password){
@@ -58,6 +115,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return false;
     }
+
+
+
     //checking name if exists
     public Boolean chkname(String name){
         SQLiteDatabase db = this.getReadableDatabase();
@@ -66,4 +126,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return false;
         }else return true;
     }
+
+    public Cursor fetch() {
+
+        ArrayList<Long> values = new ArrayList<Long>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT date_record FROM user_weight", null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                // values.add(cursor.getString(cursor.getColumnIndex("date_record")));
+                values.add(cursor.getLong(cursor.getColumnIndex("date_record")));
+            } while (cursor.moveToNext());
+        }
+//
+        Log.d(TAG, "fetch: the cursor is working");
+//        if(cursor != null && !cursor.isClosed()){
+//            cursor.close();
+//        }
+
+        //db.close();
+        return cursor;
+    }
+
+
 }
