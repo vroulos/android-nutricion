@@ -42,7 +42,7 @@ public class HomeActivity1 extends AppCompatActivity {
     }
 
     public void goToPhotos(View view) {
-        Intent goToPhotos = new Intent(HomeActivity1.this, PhotosActivity.class);
+        Intent goToPhotos = new Intent(HomeActivity1.this, PhotosActivity1.class);
         startActivity(goToPhotos);
     }
 

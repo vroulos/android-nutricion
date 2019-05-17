@@ -1,9 +1,11 @@
 <resources>
-    <string name="app_name">My Nutricion</string>
     <string name="personal_data">προσωπικά δεδομένα</string>
     <string name="messeges">Μηνύματα</string>
     <string name="program_nut">πρόγραμμα διατροφής</string>
     <string name="menu_search">edo menu</string>
+
+
+    <string name="get_image">Get image</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
