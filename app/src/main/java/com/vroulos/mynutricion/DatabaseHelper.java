@@ -13,6 +13,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String TAG = "super name";
 
+    public static final String DATABASE_NAME = "nutri.db";
+    private static final int DATABASE_VERSION = 1;
+    public static final String INPUT_TABLE_NAME = "input";
+    public static final String INPUT_COLUMN_ID = "_id";
+    public static final String INPUT_COLUMN_Title = "title";
+    public static final String INPUT_COLUMN_Text = "text";
+
     //the database created when the app installed
     public DatabaseHelper(Context context) {
         super(context, "nutri.db", null, 2);
@@ -26,6 +33,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("create table user(username text primary key, password text)");
         db.execSQL("create table user_weight( weight int, username text , date_record long)");
         db.execSQL("create table user_perimeter(perimeter int, username text)");
+
+        db.execSQL("CREATE TABLE " + INPUT_TABLE_NAME + "(" +
+                INPUT_COLUMN_ID + " INTEGER PRIMARY KEY, " +
+                INPUT_COLUMN_Title + " TEXT, " +
+                INPUT_COLUMN_Text + " TEXT )"
+        );
     }
 
 //    @Override
@@ -40,6 +53,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("drop table if exists user");
         db.execSQL("drop table if exists user_weight");
         db.execSQL("drop table if exists user_perimeter");
+        db.execSQL("DROP TABLE IF EXISTS " + INPUT_TABLE_NAME);
         onCreate(db);
     }
 
@@ -147,6 +161,42 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         //db.close();
         return cursor;
+    }
+
+    
+    //insert the note to database
+    public boolean insertPerson(String title,String text) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(INPUT_COLUMN_Title, title);
+        contentValues.put(INPUT_COLUMN_Text, text);
+        db.insert(INPUT_TABLE_NAME, null, contentValues);
+        return true;
+    }
+
+
+    //get all notes
+    public Cursor getAllPersons() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery( "SELECT * FROM " + INPUT_TABLE_NAME, null );
+        return res;
+    }
+
+    //get single note
+    public Cursor getPerson(String id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor res = db.rawQuery( "SELECT * FROM " + INPUT_TABLE_NAME + " WHERE " +
+                INPUT_COLUMN_ID + "=?", new String[] { id } );
+        return res;
+    }
+
+
+    //delete a note
+    public void deleteSingleContact(String id){
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(INPUT_TABLE_NAME, INPUT_COLUMN_ID + "=?", new String[]{id});
+//KEY_NAME is a column name
     }
 
 
