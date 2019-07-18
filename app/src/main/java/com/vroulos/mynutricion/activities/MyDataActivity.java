@@ -1,4 +1,4 @@
-package com.vroulos.mynutricion;
+package com.vroulos.mynutricion.activities;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -16,6 +16,8 @@ import android.widget.Toast;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
+import com.vroulos.mynutricion.DatabaseHelper;
+import com.vroulos.mynutricion.R;
 
 import java.io.File;
 import java.util.Arrays;
@@ -87,6 +89,7 @@ public class MyDataActivity extends AppCompatActivity {
                 db.insert_weight(weight, currentdate);
                 userWeight.setText("");
 
+
                 GraphView graph = (GraphView) findViewById(R.id.graph);
 
                 //create LineGraphSeries object and get the getData1
@@ -99,6 +102,7 @@ public class MyDataActivity extends AppCompatActivity {
                 graph.onDataChanged(false, false);
             }
         });
+
 
         //put the waste to db and display the history in chart
         addWasteMeasureToDb.setOnClickListener(new View.OnClickListener() {

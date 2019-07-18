@@ -1,4 +1,4 @@
-package com.vroulos.mynutricion;
+package com.vroulos.mynutricion.activities;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -15,6 +15,9 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.app.AlertDialog;
+
+import com.vroulos.mynutricion.DatabaseHelper;
+import com.vroulos.mynutricion.R;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -7,7 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.vroulos.mynutricion.models.Message;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -27,12 +30,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
+
+
     @Override
     //create the tables user and user_username
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table user(username text primary key, password text)");
+        db.execSQL("create table user(username text primary key, email text, password text)");
         db.execSQL("create table user_weight( weight int, username text , date_record long)");
         db.execSQL("create table user_perimeter(perimeter int, username text)");
+        db.execSQL("create table user_messeges(customer text, messege text , inSync int)");
+
 
         db.execSQL("CREATE TABLE " + INPUT_TABLE_NAME + "(" +
                 INPUT_COLUMN_ID + " INTEGER PRIMARY KEY, " +
@@ -47,71 +54,125 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //    }
 
 
-
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("drop table if exists user");
         db.execSQL("drop table if exists user_weight");
         db.execSQL("drop table if exists user_perimeter");
+        db.execSQL("drop table if exists user_messeges");
+
         db.execSQL("DROP TABLE IF EXISTS " + INPUT_TABLE_NAME);
         onCreate(db);
     }
 
     //insert data to table user
-    public boolean insert(String name , String password){
-            SQLiteDatabase db = this.getWritableDatabase();
+    public boolean insert(String name, String password, String email) {
+        SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
 
         contentValues.put("username", name);
-        contentValues.put("password" , password);
-        long ins = db.insert("user", null,contentValues);
+        contentValues.put("password", password);
+        contentValues.put("email", email);
+        long ins = db.insert("user", null, contentValues);
 
-        if (ins== -1) {
+        if (ins == -1) {
             return false;
-        }
-        else return true;
+        } else return true;
     }
 
 
-
-
-
-
-
-    public boolean insert_weight(String weight, long date){
+    public boolean insert_weight(String weight, long date) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues contentValuesWeight = new ContentValues();
         contentValuesWeight.put("weight", weight);
         contentValuesWeight.put("date_record", date);
-        long insVal = db.insert("user_weight" ,null,contentValuesWeight);
+        long insVal = db.insert("user_weight", null, contentValuesWeight);
 
-        if (insVal == -1){
+        if (insVal == -1) {
             Log.d("trela tag", "insert_weight: noooo");
             return false;
 
-        }else{
+        } else {
             Log.d("lela tag", "insert_weight: yea");
             return true;
         }
     }
 
-    public boolean setPerimeter(String perimeter){
+    public int insertMessagesFromMysql(List<Message> messages){
+        int z = 0;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+
+        ContentValues contentValuesMessage = new ContentValues();
+        // elegxei ean o pinakas messages den einai adeios
+        if (messages != null) {
+            for (int i = 0; i < messages.size(); i++) {
+                String customer = messages.get(i).getCustomer();
+                String message = messages.get(i).getMessage();
+                Integer isSync = messages.get(i).getIn_sync();
+                contentValuesMessage.put("customer", customer);
+                contentValuesMessage.put("messege", message);
+
+                // check if the data is synchronized
+                if (isSync == 0) {
+                    contentValuesMessage.put("in_sync", 1);
+                    db.insert("user_messeges", null, contentValuesMessage);
+                    z++;
+                }
+
+
+            }
+        }else {
+            
+        }
+//        String customer = messages.get(0).getCustomer();
+//        String message = messages.get(0).getMessage();
+
+
+
+
+
+//            if (isOk == -1) {
+//                Log.d("trela tag", "insert_weight: noooo");
+//                return false;
+//
+//            } else {
+//                Log.d("lela tag", "insert_weight: yea");
+//                return true;
+//            }
+        db.close();
+
+        return z;
+
+
+
+    }
+
+    public boolean setPerimeter(String perimeter) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues valuesPerimeter = new ContentValues();
-        valuesPerimeter.put("perimeter",perimeter);
-        long val = db.insert("user_perimeter",null,valuesPerimeter);
+        valuesPerimeter.put("perimeter", perimeter);
+        long val = db.insert("user_perimeter", null, valuesPerimeter);
 
-        if(val == -1){
+        if (val == -1) {
             return false;
         }
         return true;
     }
 
+    public int deleteAllMessages(){
+        String TABLE_NAME = "user_messeges";
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        int deleted_rows = db.delete(TABLE_NAME, "1", null);
+        return deleted_rows;
+    }
 
     //check the username and password to login
-    public boolean checkUserLogin(String name, String password){
+    public boolean checkUserLogin(String name, String password) {
         Log.d("a tag", "checkUserLogin: this is running right now");
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -121,7 +182,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //            Log.d("usertag", "checkUserLogin: all users are here");
 //            return  true;
 //        }
-        if(cursor.getCount()>0){
+        if (cursor.getCount() > 0) {
             Log.d("mytag", "checkUserLogin: the user exists");
 
             return true;
@@ -131,14 +192,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-
     //checking name if exists
-    public Boolean chkname(String name){
+    public Boolean chkname(String name) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("Select * from user where username=?",new String[]{name});
-        if (cursor.getCount()>0){
+        Cursor cursor = db.rawQuery("Select * from user where username=?", new String[]{name});
+        if (cursor.getCount() > 0) {
             return false;
-        }else return true;
+        } else return true;
     }
 
     public Cursor fetch() {
@@ -163,9 +223,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    
+
     //insert the note to database
-    public boolean insertPerson(String title,String text) {
+    public boolean insertPerson(String title, String text) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(INPUT_COLUMN_Title, title);
@@ -178,26 +238,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     //get all notes
     public Cursor getAllPersons() {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res = db.rawQuery( "SELECT * FROM " + INPUT_TABLE_NAME, null );
+        Cursor res = db.rawQuery("SELECT * FROM " + INPUT_TABLE_NAME, null);
         return res;
     }
 
     //get single note
     public Cursor getPerson(String id) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor res = db.rawQuery( "SELECT * FROM " + INPUT_TABLE_NAME + " WHERE " +
-                INPUT_COLUMN_ID + "=?", new String[] { id } );
+        Cursor res = db.rawQuery("SELECT * FROM " + INPUT_TABLE_NAME + " WHERE " +
+                INPUT_COLUMN_ID + "=?", new String[]{id});
         return res;
     }
 
 
     //delete a note
-    public void deleteSingleContact(String id){
+    public void deleteSingleContact(String id) {
 
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(INPUT_TABLE_NAME, INPUT_COLUMN_ID + "=?", new String[]{id});
 //KEY_NAME is a column name
     }
+
+
+
+
 
 
 }

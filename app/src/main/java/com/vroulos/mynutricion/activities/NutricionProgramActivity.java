@@ -1,7 +1,9 @@
-package com.vroulos.mynutricion;
+package com.vroulos.mynutricion.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.vroulos.mynutricion.R;
 
 public class NutricionProgramActivity extends AppCompatActivity {
 

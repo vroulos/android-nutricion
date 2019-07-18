@@ -1,4 +1,4 @@
-package com.vroulos.mynutricion;
+package com.vroulos.mynutricion.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.facebook.stetho.Stetho;
+import com.vroulos.mynutricion.DatabaseHelper;
+import com.vroulos.mynutricion.R;
+import com.vroulos.mynutricion.SaveSharedPreference;
 
 public class LoginActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.vroulos.mynutricion;
+package com.vroulos.mynutricion.activities;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.vroulos.mynutricion.DatabaseHelper;
+import com.vroulos.mynutricion.R;
 
 public class InputNoteDataActivity extends AppCompatActivity {
 

@@ -1,15 +1,17 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.ar.sceneform.plugin'
 
 android {
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.vroulos.mynutricion"
-        minSdkVersion 19
+        minSdkVersion 24
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -32,6 +34,14 @@ dependencies {
     implementation 'com.facebook.stetho:stetho-js-rhino:1.4.2'
     implementation 'com.jjoe64:graphview:4.2.2'
     implementation 'com.getbase:floatingactionbutton:1.10.1'
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+
+
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+
+    implementation 'com.squareup.retrofit2:converter-scalars:2.3.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
 }
 allprojects {
     repositories {

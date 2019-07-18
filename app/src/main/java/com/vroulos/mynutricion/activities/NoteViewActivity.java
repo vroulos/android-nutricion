@@ -1,8 +1,10 @@
-package com.vroulos.mynutricion;
+package com.vroulos.mynutricion.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
+
+import com.vroulos.mynutricion.R;
 
 public class NoteViewActivity extends AppCompatActivity {
 

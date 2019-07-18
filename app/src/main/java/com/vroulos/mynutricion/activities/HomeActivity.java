@@ -1,4 +1,4 @@
-package com.vroulos.mynutricion;
+package com.vroulos.mynutricion.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,9 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+
+import com.vroulos.mynutricion.MessageFragment;
+import com.vroulos.mynutricion.R;
 
 public class HomeActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
@@ -56,7 +59,7 @@ public class HomeActivity extends AppCompatActivity {
                         // For example, swap UI fragments here
                         switch (menuItem.getItemId()){
                             case R.id.messeges:{
-                                Intent intent = new Intent(HomeActivity.this, MessegeActivity.class);
+                                Intent intent = new Intent(HomeActivity.this, MessageActivity2.class);
                                 startActivity(intent);
                             }case R.id.program_nutricion:{
                                 // Create new fragment and transaction

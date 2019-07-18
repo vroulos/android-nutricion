@@ -4,22 +4,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegisterActivity">
+    tools:context=".activities.RegisterActivity">
 
     <EditText
         android:id="@+id/rgsUsername"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="58dp"
+        android:layout_marginBottom="8dp"
         android:ems="10"
         android:hint="Όνομα"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/rgsPassord"
+        app:layout_constraintBottom_toTopOf="@+id/emailEditext"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.873" />
+
+    <EditText
+        android:id="@+id/emailEditext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:ems="10"
+        android:hint="email"
+        app:layout_constraintBottom_toTopOf="@+id/rgsPassord"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/rgsPassord"

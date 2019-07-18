@@ -2,45 +2,68 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.vroulos.mynutricion">
     <!-- use the camera app -->
-    <uses-feature android:name="android.hardware.camera"
+    <uses-feature
+        android:name="android.hardware.camera"
         android:required="true" /> <!-- write to the external storage -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
 
     <application
+
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-
+        android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".PhotosActivity1"></activity>
-        <activity android:name=".NoteViewActivity" />
-        <activity android:name=".InputNoteDataActivity" />
-        <activity android:name=".NotesActivity" />
-        <activity android:name=".PhotosActivity" />
-        <activity android:name=".SettingsActivity" />
-        <activity android:name=".MyDataActivity" />
-        <activity android:name=".NutricionProgramActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".MessegeActivity" />
-        <activity android:name=".HomeActivity" />
-        <activity android:name=".RegisterActivity" />
-        <activity android:name=".HomeActivity1">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+
+
+
+        <activity android:name=".activities.MessageActivity2"></activity>
+
+        <activity android:name=".activities.PhotosActivity1" />
+        <activity android:name=".activities.NoteViewActivity" />
+        <activity android:name=".activities.InputNoteDataActivity" />
+        <activity android:name=".activities.NotesActivity" />
+        <activity android:name=".activities.PhotosActivity" />
+        <activity android:name=".activities.SettingsActivity" />
+        <activity android:name=".activities.MyDataActivity" />
+        <activity android:name=".activities.NutricionProgramActivity" />
+        <activity android:name=".activities.LoginActivity" />
+        <activity android:name=".activities.HomeActivity" />
+        <activity android:name=".activities.RegisterActivity" />
+        <activity android:name=".activities.HomeActivity1">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+
         </activity>
 
+
+
+
         <provider
-            android:authorities="${applicationId}.provider"
             android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.provider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"/>
+                android:resource="@xml/file_paths" />
+
         </provider>
+
+
     </application>
+
 
 </manifest>

@@ -1,9 +1,12 @@
-package com.vroulos.mynutricion;
+package com.vroulos.mynutricion.activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+
+import com.vroulos.mynutricion.R;
+import com.vroulos.mynutricion.SaveSharedPreference;
 
 public class HomeActivity1 extends AppCompatActivity {
 
@@ -49,5 +52,10 @@ public class HomeActivity1 extends AppCompatActivity {
     public void goToNotesActivity(View view){
         Intent notesIntent = new Intent(HomeActivity1.this, NotesActivity.class);
         startActivity(notesIntent);
+    }
+
+    public void goToMessagesActivity(View view){
+        Intent messageIntent = new Intent(HomeActivity1.this, MessageActivity2.class);
+        startActivity(messageIntent);
     }
 }

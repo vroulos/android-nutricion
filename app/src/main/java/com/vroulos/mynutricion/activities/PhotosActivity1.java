@@ -1,4 +1,4 @@
-package com.vroulos.mynutricion;
+package com.vroulos.mynutricion.activities;
 
 import android.Manifest;
 import android.content.Intent;
@@ -18,6 +18,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+
+import com.vroulos.mynutricion.R;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -33,10 +36,13 @@ public class PhotosActivity1 extends AppCompatActivity {
     public static final int REQUEST_PERMISSION = 200;
     private String imageFilePath = "";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_photos1);
+
+
 
         button = findViewById(R.id.button);
         imageView = findViewById(R.id.image);
@@ -53,6 +59,7 @@ public class PhotosActivity1 extends AppCompatActivity {
                 openCameraIntent();
             }
         });
+
 
     }
 
@@ -111,5 +118,8 @@ public class PhotosActivity1 extends AppCompatActivity {
 
         return image;
     }
+
+
+
 
 }
