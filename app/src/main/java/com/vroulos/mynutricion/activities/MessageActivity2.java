@@ -8,7 +8,9 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -22,6 +24,7 @@ import com.vroulos.mynutricion.api.JsonPlaceHolderApi;
 import com.vroulos.mynutricion.models.Message;
 import com.vroulos.mynutricion.models.MessagesResponse;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -39,10 +42,11 @@ public class MessageActivity2 extends AppCompatActivity  {
     private WifiReceiver wifiReceiver;
     private Switch wifiSwitch;
     ListView listView;
+    TextView aView;
 
 
 
-    //DatabaseHelper mydb;
+    DatabaseHelper mydb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +58,24 @@ public class MessageActivity2 extends AppCompatActivity  {
         wifiSwitch = findViewById(R.id.wifi_switch);
         WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 
+        ArrayList<String> arrayList ;
+        mydb = new DatabaseHelper(this);
+        arrayList = mydb.fetchUserMessages("trokis");
+        Log.d("Tag", "onCreate: fuck");
+        ArrayAdapter<String> adapter = new ArrayAdapter(this,android.R.layout.simple_list_item_1, arrayList);
+        listView.setAdapter(adapter);
+        if(adapter.getCount() == 0){
+            Log.d("TAG men", "onCreate: the adapter is empty ! ");
+        }
+
+        adapter.notifyDataSetChanged();
+
+        aView = findViewById(R.id.lalaloou);
+        aView.setText("trexo trexo");
 
     }
+
+
 
     //synchronize the data from web to android app
     private void syncData(){

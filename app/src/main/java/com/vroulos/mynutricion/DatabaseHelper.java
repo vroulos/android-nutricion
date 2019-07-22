@@ -117,7 +117,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
                 // check if the data is synchronized
                 if (isSync == 0) {
-                    contentValuesMessage.put("in_sync", 1);
+                    Log.d(TAG, "insertMessagesFromMysql: the issync is zero");
+                    contentValuesMessage.put("inSync", 1);
                     db.insert("user_messeges", null, contentValuesMessage);
                     z++;
                 }
@@ -189,6 +190,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         }
         return false;
+    }
+
+    //fetch all messeges from current user and return them as arraylist to dislplay them
+    public ArrayList<String> fetchUserMessages(String name){
+        Integer d = 0;
+        Log.d(TAG, "fetchUserMessages: first here");
+        ArrayList<String> userMessages = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        //Cursor cursor = db.rawQuery("Select messege from user_messeges where customer = ?", new String[]{name});
+        Cursor cursor = db.rawQuery("SELECT * FROM user_messeges", null);
+        if (cursor.moveToFirst()){
+            do{
+                String data = cursor.getString(cursor.getColumnIndex("messege"));
+                userMessages.add(data);
+                d++;
+            }while(cursor.moveToNext());
+            Log.d(TAG, "fetchUserMessages: tro tro troou"+d);
+        }
+        //cursor.close();
+        return userMessages;
+
     }
 
 
