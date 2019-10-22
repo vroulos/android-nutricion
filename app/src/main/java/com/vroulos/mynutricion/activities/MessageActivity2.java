@@ -18,7 +18,6 @@ import android.widget.Toast;
 
 import com.vroulos.mynutricion.DatabaseHelper;
 import com.vroulos.mynutricion.R;
-import com.vroulos.mynutricion.SyncData;
 import com.vroulos.mynutricion.WifiReceiver;
 import com.vroulos.mynutricion.api.JsonPlaceHolderApi;
 import com.vroulos.mynutricion.models.Message;
@@ -104,7 +103,7 @@ public class MessageActivity2 extends AppCompatActivity  {
                     return;
                 }
 
-
+                //body is MessageResponse object
                 MessagesResponse body = response.body();
                 final List<Message> messages = body.getMessages();
 
@@ -122,9 +121,13 @@ public class MessageActivity2 extends AppCompatActivity  {
                         DatabaseHelper databaseHelper = new DatabaseHelper(getApplicationContext());
 
                         int z = databaseHelper.insertMessagesFromMysql(messages);
-                        if (z > 0){
-                            SyncData sync = new SyncData();
-                            sync.synchronizeUserMessages();
+//                        if (z > 0){
+//                            SyncData sync = new SyncData();
+//                            sync.synchronizeUserMessages();
+//                        }
+                        //check if all the messages from user in mobile device is deleted
+                        if (!databaseHelper.checkMesseges()){
+
                         }
 
                         Toast.makeText(MessageActivity2.this, "data in the base  " +z, Toast.LENGTH_SHORT).show();

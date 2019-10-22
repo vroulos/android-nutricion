@@ -80,7 +80,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         } else return true;
     }
 
-
+//---------------------------------------------------------------------------
     public boolean insert_weight(String weight, long date) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -98,7 +98,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return true;
         }
     }
-
+//-------------------------------------------------------------------------------
     public int insertMessagesFromMysql(List<Message> messages){
         int z = 0;
 
@@ -128,29 +128,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }else {
             
         }
-//        String customer = messages.get(0).getCustomer();
-//        String message = messages.get(0).getMessage();
-
-
-
-
-
-//            if (isOk == -1) {
-//                Log.d("trela tag", "insert_weight: noooo");
-//                return false;
 //
-//            } else {
-//                Log.d("lela tag", "insert_weight: yea");
-//                return true;
-//            }
         db.close();
 
         return z;
 
+    }
+//-----------------------------------------------------------------------
+    //check if all user messages has deleted
+    public boolean checkMesseges(){
+        SQLiteDatabase db = this.getReadableDatabase();
+        String count = "SELECT count(*) FROM user_messeges";
+        Cursor cursor = db.rawQuery(count, null);
+        cursor.moveToFirst();
+        int icount = cursor.getInt(0);
+        if (icount>0){
+            //the table is not empty
+            return true;
+        }else{
+            //the table is empty
+            return false;
+        }
 
 
     }
-
+//------------------------------------------------------------------------
     public boolean setPerimeter(String perimeter) {
         SQLiteDatabase db = this.getWritableDatabase();
 
